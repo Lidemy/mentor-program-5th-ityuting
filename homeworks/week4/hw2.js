@@ -4,15 +4,25 @@ const process = require('process')
 
 const rootURL = 'https://lidemy-book-store.herokuapp.com/books/'
 
-if (process.argv[2] === 'list') getList()
+const act = process.argv[2]
 
-if (process.argv[2] === 'read') getRead()
-
-if (process.argv[2] === 'delete') handleDelete()
-
-if (process.argv[2] === 'create') handleCreate()
-
-if (process.argv[2] === 'update') handleUpdate()
+switch (act) {
+  case 'list':
+    getList()
+    break
+  case 'read':
+    getRead()
+    break
+  case 'delete':
+    handleDelete()
+    break
+  case 'create':
+    handleCreate()
+    break
+  case 'update':
+    handleUpdate()
+    break
+}
 
 function getList() {
   request.get({
@@ -24,14 +34,14 @@ function getList() {
       console.log('statusCode', response.statusCode)
       try {
         json = JSON.parse(body)
+        for (let i = 0; i < json.length; i++) {
+          console.log(String(json[i].id).padEnd(4) + json[i].name)
+        }
       } catch (e) {
         console.log('回傳格式錯誤')
       }
-      for (let i = 0; i < json.length; i++) {
-        console.log(String(json[i].id).padEnd(4) + json[i].name)
-      }
     } else {
-      console.log('操作失敗', error)
+      console.log('操作失敗', 'statusCode', response.statusCode, error)
     }
   }
   )
@@ -50,7 +60,7 @@ function getRead() {
         console.log('回傳格式錯誤')
       }
     } else {
-      console.log('操作失敗', error)
+      console.log('操作失敗', 'statusCode', response.statusCode, error)
     }
   }
   )
@@ -61,7 +71,7 @@ function handleDelete() {
     url: rootURL + process.argv[3]
   },
   (error, response, body) => {
-    console.log(response.statusCode)
+    console.log('statusCode', response.statusCode)
   }
   )
 }
@@ -78,7 +88,7 @@ function handleCreate() {
       console.log('statusCode', response.statusCode)
       console.log(response.caseless.dict.location)
     } else {
-      console.log('操作失敗', error)
+      console.log('操作失敗', 'statusCode', response.statusCode, error)
     }
   }
   )
@@ -95,7 +105,7 @@ function handleUpdate() {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       console.log('statusCode', response.statusCode)
     } else {
-      console.log('操作失敗', error)
+      console.log('操作失敗', 'statusCode', response.statusCode, error)
     }
   }
   )
