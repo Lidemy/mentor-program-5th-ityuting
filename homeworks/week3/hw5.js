@@ -22,11 +22,11 @@ function solve(lines) {
     const a = (lines[i].split(' ')[0])
     const b = (lines[i].split(' ')[1])
     const way = Number(lines[i].split(' ')[2])
-    console.log(isCompare(a, b, way))
+    console.log(canCompare(a, b, way))
   }
 }
 
-function isCompare(a, b, way) {
+function canCompare(a, b, way) {
   if (way === 1) {
     if (a.length > b.length) {
       return 'A'

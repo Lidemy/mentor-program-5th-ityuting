@@ -18,10 +18,10 @@ rl.on('close', () => {
 
 function solve(lines) {
   const starnumber = Number(lines[0])
-  console.log(isStar(starnumber))
+  console.log(printStar(starnumber))
 }
 
-function isStar(starnumber) {
+function printStar(starnumber) {
   for (let i = 1; i < starnumber; i++) {
     console.log('.'.repeat(i))
   }
