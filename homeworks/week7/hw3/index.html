@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Todo List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" />
+  <style>
+    .body {
+      margin: 0px;
+    }
+
+    .list {
+      height: 600px;
+      width: 600px;
+      margin: 15% 25%;
+      background: rgba(19, 43, 69, 96%);
+      border-radius: 2%;
+      box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .list__top {
+      position: relative;
+      display:flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 36px;
+    }
+
+    .leftPing, .rightPing {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #98dfe3eb;
+      box-shadow: 2px 2px 4px #ffffff;
+      z-index: 1;
+    }
+
+    .leftPing {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    .rightPing {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    h1 {
+      font-size: 33px;
+      color: white;
+    }
+
+    input {
+      width: 444px;
+      font-size: 20px;
+      border: 2px solid hsl(0, 2%, 65%);
+      border-radius: 3%;
+    }
+
+    .list__bottom {
+      display: flex;
+      flex-direction: column;
+      margin: 10%;
+    }
+
+    .content {
+      display: flex;
+      justify-content: space-between;
+      color: white;
+      font-size: 24px;
+      margin-bottom: 7px;
+    }
+
+    .content__tick {
+      width: 20px;
+      height: 20px;
+      border: 3px solid white;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .content__delete {
+      position: relative;
+      right: 0px;
+    }
+
+    .mark {
+      text-decoration: line-through;
+      color: rgba(122, 224, 255, 0.3);
+    }
+
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('input').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const note = document.createElement('div')
+          note.classList.add('content')
+          note.innerHTML = `
+            <div class="content__tick"></div>
+            <div class="content__thing"> ${document.querySelector('input').value} </div>
+            <div class="content__delete"> X </div>`
+          document.querySelector('.list__bottom').appendChild(note)
+        }
+      })
+      document.querySelector('.list__bottom').addEventListener('click', (e) => {
+        if (e.target.classList.contains('content__tick')) {
+          e.target.nextElementSibling.classList.toggle('mark')
+        }
+        if (e.target.classList.contains('content__delete')) {
+          document.querySelector('.list__bottom').removeChild(
+            e.target.closest('.content')
+          )
+        }
+      })
+    })
+  </script>
+</head>
+<body>
+  <div class="list">
+    <div class="list__top">
+      <div class="leftPing"></div>
+      <div class="rightPing"></div>
+      <h1> Todo List：探索自己的注定。 </h1>
+      <input type="text" placeholder="好好吃飯 好好生活 好好睡覺。"/>
+    </div>
+    <div class="list__bottom">
+      <div class="content">
+        <div class="content__tick"></div>
+        <div class="content__thing"> 我是誰我在哪 </div>
+        <div class="content__delete"> X </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
