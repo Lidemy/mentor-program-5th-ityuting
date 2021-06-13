@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8" />
+
+  <title>新拖延運動報名表單</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" />
+  <style>
+    body {
+      background: rgba(0, 0, 0, 0.3);
+      margin-top: 0;
+    }
+
+    .wrapper {
+      max-width: 645px;
+      background: white;
+      margin: 0 auto;
+      border-top: solid 8px #fad312;
+      margin-top:15%;
+      margin-bottom:15%;
+    }
+
+    .section {
+      margin: 42px;
+      color: #000000;
+      font-family: MicrosoftJhengHei;
+    }
+
+    h1 {
+      font-size: 36px;
+    }
+
+    .info p {
+      font-size: 14px;
+      line-height: 1rem;
+    }
+
+    .remark:before, .star:after {
+      content: "*";
+      color: red;
+      font-size: 16px;
+    }
+
+    .choose {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    form > div {
+      margin-bottom: 48px;    
+    }
+
+    form > div > input {
+      border: 1.5px solid #d0d0d0;
+      color: #afafaf;
+      font-size: 16px;
+    }
+
+    .choice > div {
+      display: flex;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #fad312;
+      margin-bottom: 12px;
+      border-radius: 3px;
+    }
+
+    .mark {
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      padding: 24px;
+      background: #000000;
+      color: #999999;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .remind1, .remind2 {
+      color: red;
+      font-size: 10px;
+    }
+
+    @media(max-width: 768px) {
+      .section {
+        margin: 0 0;
+        margin-bottom: 12px;
+        text-align: center;
+        width: 100%;
+        display: inline-block;
+        justify-content: center;
+      }
+
+      .choice div {
+        position: relative;
+        justify-content: center;
+        width: auto;
+      }
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('.button').addEventListener('click', () => {
+        const chooseList = document.querySelectorAll('.choose ~ input')
+        const remind = document.querySelectorAll('.remind1')
+
+        for (let i = 0; i < chooseList.length; i++) {
+          if (chooseList[i].value === '' && remind[i].style.display === 'none') {
+            remind[i].style.display = 'inline'
+          } else if (chooseList[i].value === '' && remind[i].style.display === 'inline') {
+            continue
+          } else if (remind[i].style['display'] === 'inline') {
+            remind[i].style.display = 'none'
+          } else {
+            continue
+          }
+        }
+
+        if (!(document.getElementById('bed').checked) & !(document.getElementById('floor').checked)) {
+          document.querySelector('.remind2').style.display = 'inline'
+        } else {
+          document.querySelector('.remind2').style.display = 'none'
+        }
+
+        for (let i = 0; i < remind.length; i++) {
+          if (remind[i].style['display'] === 'none') {
+            continue
+          } else {
+            return
+          }
+        }
+
+        if (document.querySelector('.remind2').style.display === 'inline') {
+          return
+        }
+
+        const item = document.querySelectorAll('.choose')
+        let messenger = ''
+        for (let i = 0; i < item.length; i++) {
+          messenger += `${item[i].innerText} : ${chooseList[i].value} \n`
+        }
+        alert(messenger)
+      })
+    }) 
+  </script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="section">
+      <h1><br>新拖延運動報名表單</h1>
+    </div>
+    <div class="section">
+      <div class="info">
+        <p>活動日期：2020/12/10 ~ 2020/12/11</p>
+        <p>活動地點：台北市大安區新生南路二段1號</p>
+      </div>
+      <div class="remark" style="color: red">
+        必填
+      </div>
+    </div>
+    <div class="section">
+      <form>
+        <div>
+          <div class="choose star">暱稱</div> 
+          <input type="text" placeholder="您的回答"/> 
+          <div class="remind1" style="display: none">未填寫</div>
+        </div>
+        <div>
+          <div class="choose star">電子郵件</div>
+          <input type="mail" placeholder="您的電子郵件"/>
+          <div class="remind1" style="display: none">未填寫</div>
+        </div>
+        <div>
+          <div class="choose star">手機號碼</div>
+          <input type="text" placeholder="您的手機號碼"/>
+          <div class="remind1" style="display: none">未填寫</div>
+        </div>
+        <div>
+          <div class="star" style="font-size: 20px; margin-bottom: 12px">報名類型</div>
+          <div class="choice">
+            <div><input type="radio" name="kind" id="bed" /><label for="bed">躺在床上用想像力實作</label></div>
+            <div><input type="radio" name="kind" id="floor" /><label for="floor">趴在地上划手機找現成的</label></div>
+            <div class="remind2" style="display: none">未選取</div>
+          </div>
+        </div>
+        <div>
+          <div class="choose star">怎麼知道這個活動的？</div>
+          <input type="text" placeholder="您的回答"/>
+          <div class="remind1" style="display: none">未填寫</div>
+        </div>
+        <div>
+          <div class="choose">其他</div>
+          <div class="mark">對活動的一些建議</div>
+          <input type="text" placeholder="您的回答"/>
+          <div class="remind1" style="display: none">未填寫</div>
+        </div>
+      </form>
+    </div>
+    <div class="section">
+      <div class="button">
+        提交
+      </div>
+      <div class="mark">
+        請勿透過表單送出您的密碼。
+      </div>
+      <br>
+      <br>
+    </div>
+  </div>
+  <footer>© 2020 © Copyright. All rights Reserved.</footer>
+</body>
+</html>
