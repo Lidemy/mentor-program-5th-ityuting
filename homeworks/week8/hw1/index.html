@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>抽獎頁面</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" />
+  <style>
+    body {
+      margin: 0px;
+    }
+
+    .wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0px 40px;
+    }
+
+    .navbar .wrapper {
+      box-shadow: -1.4px -1.4px 6px 0 #97a2a0;
+      height: 84px;
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar__site-name {
+      font-size: 36px;
+      color: #489846;
+      font-family: Questrial;
+    }
+
+    .navbar__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      font-size: 18px;
+    }
+
+    .navbar__list li {
+      margin-left: 12px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .navbar__list li.active, .navbar__list li:hover {
+      background: #ff7286;
+    }
+
+    .navbar__list li.active a, .navbar__list li:hover a{
+      color:white;
+    }
+
+    .navbar__list li a {
+      display: block;
+      text-decoration: none;
+      color:black;
+      padding: 12px 24px;
+    }
+
+    .lottery {
+      height: 766px;
+      background: url(games-bn.jpg) no-repeat center center;
+      background-size: cover;
+      position: relative;
+      display: flex;
+      justify-content: center; 
+    }
+
+    .prize1 {
+      height: 766px;
+      background: url(first-prize.jpg) no-repeat center center;
+      background-size: cover;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: black;
+    }
+
+    .prize2 {
+      height: 766px;
+      background: url(second-prize.jpg) no-repeat center center;
+      background-size: cover;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: black;
+    }
+
+    .prize3 {
+      height: 766px;
+      background: url(third-prize.jpg) no-repeat center center;
+      background-size: cover;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: black;
+    }
+
+    .prize4 {
+      height: 766px;
+      background: black;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+    }
+
+    .prize-post {
+      font-size: 36px;
+      color: balck;
+      margin: 190px 0px 20px 0px;
+    }
+
+    .rule {
+      position: absolute;
+      width: 500px;
+      height: 560px;
+      top: 55px;
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      font-family: MicrosoftJhengHei;
+    }
+    
+    .rule__title {
+      color: #5ec1b6;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin: 40px 60px 24px 60px; 
+    }
+
+    .rule__desc {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rule__items {
+      display: flex;
+      text-align: left;
+      align-items: flex-start;
+      color: #322929;
+      padding: 24px 0px;
+      border-bottom: dashed 1px #cdcdcd; 
+    }
+
+    .item-title {
+      flex: 1;
+      font-size: 18px;
+      font-weight: bold;
+      word-break: keep-all;
+      margin-right: 10px;
+    }
+
+    .item-desc {
+      flex: 5;
+      font-size: 16px;
+      line-height: 1.63;
+      white-space: pre-wrap;
+    }
+
+    .button {
+      font-size: 20px;
+      color: white;
+      text-align: center;
+      padding: 18px 160px;
+      background: #e62a45;
+      border-radius: 8px;
+      margin-top: 36px;
+    }
+
+    .button:hover {
+      cursor: pointer;
+    }
+
+    .footer__top {
+      background: #e8efee;
+      padding: 32px 0px;
+      color: #484848;
+    }
+
+    .footer__top .wrapper {
+      display: flex;
+      justify-content: space-between;
+
+    }
+    
+    .footer__site {
+      font-size: 36px;
+      color: #489846;
+    }
+
+    .footer__info {
+      margin-right: 16px;
+    }
+
+    .footer__info p + p {
+      margin-top: 10px;
+    }
+
+    .footer__bottom {
+      background: #35564b;
+      padding: 15px;
+      text-align: center;
+      color: white;
+      font-size: 16px;
+    }
+  </style>
+  <script>
+    function doLottery(prize) {
+      // 這裡是不用全域變數的寫法
+      const prizeList =  {
+        FIRST: {
+          lotBG: 'prize1',
+          lotInf: '恭喜你中頭獎了！日本東京來回雙人遊！'
+        },
+        SECOND: {
+          lotBG: 'prize2',
+          lotInf: '二獎！90吋電視一台！'
+        },
+        THIRD: {
+          lotBG: 'prize3',
+          lotInf: '恭喜你抽中三獎：知名YouTuber簽名握手會入場券一張，bang！'
+        },
+        NONE: {
+          lotBG: 'prize4',
+          lotInf: '銘謝惠顧'
+        }
+      }
+      document.querySelector('#lottery').setAttribute('class', '')
+      document.querySelector('#lottery').classList.add(`${prizeList[`${prize}`].lotBG}`)  // 為了能用參數的 prize 抓到 prizeList 裡面的物件，試了好久 QAQ，最後才想出來用兩層 `${}` ，哦哦哦哦哦試出來的時候真的想大喊。
+      document.querySelector('#lottery').innerHTML = 
+      `<div class="prize-post">${prizeList[`${prize}`].lotInf}</div>
+      <div class="button">我要抽獎</div>`
+
+      /* 這裡是一開始的作法，用了全域變數，但知道盡量不要用全域變數，所以後來寫了上面的做法，但這裡也寫很久還是想保留紀念一下哈哈哈哈哈ˊˇˋ。
+      switch (prize) {
+        case "FIRST":
+          var lotBG = 'prize1'
+          var lotInf = '恭喜你中頭獎了！日本東京來回雙人遊！'
+          break
+        case "SECOND":
+          var lotBG = 'prize2'
+          var lotInf = '二獎！90吋電視一台！'
+          break
+        case "THIRD":
+          var lotBG = 'prize3'
+          var lotInf = '恭喜你抽中三獎：知名YouTuber簽名握手會入場券一張，bang！'
+          break
+        case "NONE":
+          var lotBG = 'prize4'
+          var lotInf = '銘謝惠顧'
+          break
+      }
+      document.querySelector('#lottery').setAttribute('class', '')
+      document.querySelector('#lottery').classList.add(`${lotBG}`)
+      document.querySelector('#lottery').innerHTML = 
+      `<div class="prize-post">${lotInf}</div>
+      <div class="button">我要抽獎</div>`
+      */
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('.button').addEventListener('click', () => {
+        const request = new XMLHttpRequest()
+        request.open('GET', 'https://dvwhnbka7d.execute-api.us-east-1.amazonaws.com/default/lottery', true)
+        request.onload = function() {
+          if (request.status >= 200 && request.status < 400) {
+            const json = JSON.parse(request.responseText)
+            if (json.prize === 'FIRST' || json.prize === 'SECOND') { // response prize 也有可能不是這四種情況，不過判斷式裡好像最多只能判斷兩種情況 ( ? )，找不到兩種以上的寫法，只能分開兩兩判斷。
+              doLottery(json.prize)
+            } else if (json.prize === 'THIRD' || json.prize === 'NONE') {
+              doLottery(json.prize)
+            } else {
+              console.log(json.prize)
+              alert('系統不穩定，請再試一次') // 測試超級多遍，為了把所有情況都按出來，系統不穩定比抽到頭獎還困難呀～www
+            }
+          }
+        }
+        request.onerror = function() {
+          alert('系統不穩定，請再試一次')
+        }
+        request.send()
+      })
+    })
+  </script>
+</head>
+<body>
+  <nav class="navbar">
+    <nav class="wrapper">
+      <div class="navbar__site-name">
+        Just A Bite! 
+      </div>
+      <ul class="navbar__list">
+        <li class="active"><a href="#"> 抽個大獎 </a></li>
+        <li><a href="#"> 我要點餐 </a></li>
+        <li><a href="#"> 查詢訂單 </a></li>
+        <li><a href="#"> 常見問題 </a></li>
+      </ul>  
+    </nav>
+  </nav>
+  <div class="lottery" id="lottery">
+    <div class="rule">
+      <div class="rule__title">2020 夏日輕盈特賞！ 抽獎活動辦法</div>
+      <div class="rule__desc">
+        <div class="rule__items">
+          <div class="item-title">活動期間：</div>
+          <div class="item-desc">2020/06/01~2020/07/01</div>
+        </div>
+        <div class="rule__items">
+          <div class="item-title">活動說明：</div>
+          <div class="item-desc">今天老闆佛心來著決定給大家發獎勵，有看有機會，沒看只能幫QQ！只要在店內消費滿1000000元即有機會獲得 - 頭獎日本東京來回雙人遊！</div>
+        </div>
+        <div class="rule__items">
+          <div class="item-title"><pre style="margin: 0px">獎　　品：</pre></div>
+          <div class="item-desc">❤ 頭獎一名：日本東京來回雙人遊(市價14990元)
+❤ 貳獎三名：90 吋電視一台(市價5990元)
+❤ 參獎十名：知名 YouTuber 簽名握手會入場券一張(市價1500元)</div>
+        </div>
+      </div>
+      <div class="button">我要抽獎</div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer__top">
+      <div class="wrapper">
+        <div class="footer__info">
+          <p>餐館地址: 天上地下天堂路三分之一里六段520號</p>
+          <p>訂位專線：02-1314-5566</p>
+          <p>營業時間：週一〜週五 09:00~18:00 / 週六、週日、國定假日（含連假）休息</p>
+          <p>email：service@justabite.com.tw</p>
+        </div>
+        <div>
+          <div class="footer__site">
+            Just A Bite!
+          </div>
+          <div>
+            Facebook / Instagram / Youtube
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      Copyright © 2020 Just A Bite All Rights Reserved. 咬一口股份有限公司版權所有
+    </div>
+  </div>
+</body>
+</html>
