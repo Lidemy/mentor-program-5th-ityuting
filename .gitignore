@@ -1,4 +1,6 @@
 node_modules/
 conn.php
+blog_conn.php
 .DS_STORE
 .eslintcache
+
