@@ -1,0 +1,107 @@
+body {
+  background-color: #e7eff5;
+  margin: 0px;
+}
+
+.warning {
+  background: #ffffff;
+  color: red;
+  text-align: center;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.board {
+  background: #0c293a;
+  width: 100%;
+  max-width: 600px;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.board_title {
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1.5em;
+}
+
+.board_nick {
+  color: #ffffff;
+  margin: 5px 0;
+  font-family: Comic Sans MS, Microsoft JhengHei;
+}
+
+
+.board_newmsg textarea {
+  margin: 5px 0px;
+  width: 100%;
+  resize: none;
+  font-family: Comic Sans MS, Microsoft JhengHei;
+}
+
+.board_submit-btn {
+  color: #081724;
+  padding: 4px 7px;
+  font-size: 14px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+.card {
+  background: #081724;
+  color: #ffffff;
+  box-shadow: 1px 1px 1px #2b4160;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  display: flex;
+  margin-top: 10px;
+  font-family: Comic Sans MS, Microsoft JhengHei;
+}
+
+.card_avator {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: 50%;
+  background: #ffffff;
+  margin-right: 10px;
+}
+
+.card_author {
+  color: aquamarine;
+}
+
+.card_time {
+  color: #2b4160;
+}
+
+.card_id {
+  display: none;
+}
+
+.card_info span {
+  display: inline-box;
+  overflow: hidden;
+  font-size: 14px;
+  margin-right: 4px;
+}
+
+.card_info a {
+  text-decoration:none;
+}
+
+.card_msg {
+  margin-top: 5px;
+  word-break: break-word;
+}
+
+.more_btn {
+  border: none;
+  color: white;
+  background: #25d3e5fc;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 5px;
+}
