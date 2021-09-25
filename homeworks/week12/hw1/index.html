@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>留言板</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" />
+  <link rel="stylesheet" href="stylesheet.css" type="text/css"/>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    
+    const siteKey = 'yuting'
+    let lastId = null
+
+    $(document).ready(() => {
+      // 拿留言板資料
+      getMsgs()
+
+      // 送出留言 request
+      $('.board_newmsg').submit(e => {
+        e.preventDefault()
+        const newMsgData = {
+          'site_key': 'yuting',
+          'nickname': $('input[name=nickname]').val(),
+          'comment': $('textarea[name=comment]').val()
+        }
+
+        $.ajax({
+          type: "POST",
+          url: "http://mentor-program.co/mtr04group4/yuting/week12/hw1/api_add_newmsg.php",
+          data: newMsgData
+        }).done((data) => {
+          if(data.ok === false) {
+            alert(data.message)
+            return
+          }
+          $('input[name=nickname]').val('')
+          $('textarea[name=comment]').val('')
+          // 送出留言後，馬上反應於留言板。
+          appendCommentToDOM($('.cards'), newMsgData, true)
+        })
+      })
+
+      // loadMore 事件代理人機制
+      $('.cards').on('click', '.more_btn', () => {
+        $('.more_btn').hide()
+        getMsgs()
+      })
+    })
+
+    function escape(input) {
+      return String(input).replace(/\&/g, '&amp;')
+        .replace(/\</g, '&lt;')
+        .replace(/\>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/\'/g, '&#x27')
+        .replace(/\//g, '&#x2F')
+    }
+    
+    function getMsgAPI(siteKey, lastId, cb) {
+      let url = `http://mentor-program.co/mtr04group4/yuting/week12/hw1/api_getmsg.php?site_key=${siteKey}`
+      if (lastId) {
+        url += '&before=' + lastId
+      }
+      $.ajax({
+        url // key 和 value 值的變數若名稱一樣，則直接寫變數就可以。
+      }).done((data) => {
+        cb(data)
+      })
+    }
+
+    function getMsgs(isMoreLoad) {
+      getMsgAPI(siteKey, lastId, data => {
+        if(data.ok === false) {
+          alert(data.message)
+          return
+        }
+        let comments = data.comments
+        for (let comment of comments) {
+          appendCommentToDOM($('.cards'), comment)
+        }
+        lastId = data.lastId
+        // loadMore 到最舊一筆後，不再顯示 loadMore 按鈕。
+        // 先這樣，假裝 id = 1 的最舊一筆資料永遠不會被刪掉，當作公告啦公告啦 QAQ。
+        if (lastId !== 1) {
+          $('.cards').append('<button class="more_btn">載入更多</button>')
+        }
+      })
+    }
+
+    function appendCommentToDOM(container, msg, isPrepend) {
+      const card = `
+        <div class="card">
+          <div class="card_avator">
+            </div>
+            <div class="card_info">
+              <div>
+                <span class="card_author">${escape(msg.nickname)}</span>
+                <span class="card_time">${escape(msg.created_at)}</span>
+                <span class="card_id">${escape(msg.id)}</span>
+              </div>
+              <div class="card_msg">${escape(msg.comment)}</div>
+          </div>
+        </div>
+      `
+      if (isPrepend) {
+        container.prepend(card)
+      } else {
+        container.append(card)
+      }
+    }
+
+  </script>
+</head>
+<body>
+  <header class="warning">注意！本站為練習用網站，因教學用途刻意忽略資安的實作，註冊時請勿使用任何真實的帳號或密碼。</header>
+  <main class="board">
+    <span><strong class="board_title">Comments</strong></span>
+    <br/>
+    <div>
+    <form class="board_newmsg" method="post">
+      <div class="board_nick">
+        <span>暱稱：</span>
+        <input type="text" name="nickname"></input>
+      </div>
+      <textarea name="comment" rows="5"></textarea>
+      <input class="board_submit-btn" type="submit" />
+    </form>
+    <hr/>
+    <section class="cards">
+    </section>
+  </main>
+</body>
+</html>
