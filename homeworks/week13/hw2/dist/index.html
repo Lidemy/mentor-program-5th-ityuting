@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>留言板 Plugin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="bundle.js"></script>
+  <script>
+    $(document).ready(() => {
+      commentPlugin.init({
+        siteKey: 'yuting',
+        apiUrlRoot: 'http://mentor-program.co/mtr04group4/yuting/week13/hw2',
+        commentArea: '.comment-area'
+      })
+    })
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="comment-area"></div>
+  </div>
+</body>
+</html>

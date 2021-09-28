@@ -1,0 +1,255 @@
+$font-family01: MicrosoftJhengHei;
+
+// 灰色文字
+$color-gray01: #787878;
+// 文章灰色邊框
+$color-gray02: #9a9a9a;
+// 文章時間底色
+$color-gray03: #eeeeee;
+// 介紹漸層灰色
+$color-gray04: #434343;
+$color-black01: #333;
+$color-white01: #fefefe;
+
+$font-size01: 14px;
+$font-size02: 16px;
+$font-size03: 28px;
+
+$margin-perArticle: 30px;
+$margin-articleItem: 15px;
+
+%content {
+  margin: 15px 0 30px 0;
+  line-height: 1.5rem;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+@mixin flex-horizon {
+  display: flex;
+}
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+@mixin flex-spaceBetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+body {
+  font-family: $font-family01;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0px 40px;
+}
+
+.navbar {
+  .wrapper {
+    background: $color-white01;
+    height: 70px;
+    @include flex-center;
+  }
+  &__siteName {
+    color: $color-black01;
+    font-size: $font-size03;
+    font-weight: bold;
+  }
+  &__activeList{
+    flex-grow: 1;
+    @include flex-spaceBetween;
+    .activeList {
+      list-style: none;
+      @include flex-horizon();
+      li {
+        margin: 0px 5px;
+        a {
+          color: $color-gray01;
+          font-size: $font-size02;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+.blogIntro {
+  color: $color-white01;
+  background: linear-gradient($color-black01, $color-gray04);
+  height: 200px;
+  position: relative;
+  text-align: center;
+  & div {
+    @include center;
+    & h1 {
+      font-size: $font-size03;
+    }
+    & h3 {
+      font-size: $font-size01;
+      font-weight: normal;
+    }
+  }
+}
+
+.blog_main {
+  margin: $margin-perArticle 300px;
+}
+
+.perArticle {
+  border: 1px $color-gray02 solid;
+  padding: 15px;
+  margin-bottom: $margin-perArticle;
+  .welcome {
+    position: relative;
+    .title {
+      color: $color-black01;
+      font-size: $font-size02;
+      margin-bottom: $margin-articleItem;
+    }
+  }
+  .time {
+    color: $color-gray01;
+    font-size: $font-size01;
+    background: $color-gray03;
+    margin-bottom: $margin-articleItem;
+    padding: 10px;
+    border-radius: 3px;
+  }
+  .date {
+    color: $color-gray01;
+    font-size: $font-size01;
+  }
+  .simpleContent {
+    @extend %content;
+    -webkit-line-clamp: 7;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .wholeContent {
+    @extend %content;
+  }
+}
+
+.perAdmin {
+  position: relative;
+  margin: 20px 0;
+  border-bottom: 1px $font-size02 solid;
+}
+
+.functionBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  .edit {
+    color: $color-gray01;
+    font-size: $font-size01;
+    box-sizing: border-box;
+    margin-left: 7px;
+  }
+}
+
+.btn {
+  padding: 5px;
+  border: 1px $color-gray02 solid;
+  border-radius: 3px;
+  text-decoration: none;
+}
+
+.newArticle {
+  border: 1px $color-gray02 solid;
+  padding: 15px;
+  margin-bottom: $margin-perArticle;
+  .title {
+    color: $color-black01;
+    font-size: $font-size01;
+    margin-bottom: $margin-articleItem;
+  }
+  form {
+    @include flex-column;
+    position: relative;
+    padding-bottom: 30px;
+    .newArticleInfo {
+      @include flex-column;
+      input {
+        margin-bottom: $margin-articleItem;
+      }
+    }
+    textarea {
+      margin-bottom: $margin-articleItem;
+    }
+    div {
+      .addBtn {
+        position: absolute;
+        right: 0px;
+      }
+    }
+  }
+}
+
+
+
+.blogFooter {
+  color: $color-white01;
+  font-size: $font-size01;
+  background: $color-black01;
+  padding: 10px 5px;
+  text-align: center;
+}
+
+/* blog_login */
+
+.login {
+  max-width: 360px;
+  padding: 40px 60px 80px 60px;
+  margin: 60px auto;
+  border: 1px $color-black01 solid;
+  & h1 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+}
+
+.login form {
+  @include flex-column;
+  .loginInfo {
+    @include flex-column;
+    span {
+      color: $color-black01;
+      font-size: $font-size01;
+      margin-left: 10px;
+    }
+    input {
+      margin-bottom: $margin-articleItem;
+    }
+  }
+  .loginBtn {
+    color: $color-white01;
+    font-size: $font-size01;
+    background: linear-gradient( $color-black01, $color-gray04);
+    padding: 16px 0;
+    margin-top: 40px;
+    border-radius: 3px;
+    text-align: center;
+  }
+}
+
