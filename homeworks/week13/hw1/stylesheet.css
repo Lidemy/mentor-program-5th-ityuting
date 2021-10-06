@@ -1,0 +1,210 @@
+.perArticle .wholeContent, .perArticle .simpleContent {
+  margin: 15px 0 30px 0;
+  line-height: 1.5rem;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+body {
+  font-family: MicrosoftJhengHei;
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0px 40px;
+}
+
+.navbar .wrapper {
+  background: #fefefe;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.navbar__siteName {
+  color: #333;
+  font-size: 28px;
+  font-weight: bold;
+}
+.navbar__activeList {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+}
+.navbar__activeList .activeList {
+  list-style: none;
+  display: flex;
+}
+.navbar__activeList .activeList li {
+  margin: 0px 5px;
+}
+.navbar__activeList .activeList li a {
+  color: #787878;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.blogIntro {
+  color: #fefefe;
+  background: linear-gradient(#333, #434343);
+  height: 200px;
+  position: relative;
+  text-align: center;
+}
+.blogIntro div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.blogIntro div h1 {
+  font-size: 28px;
+}
+.blogIntro div h3 {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.blog_main {
+  margin: 30px 300px;
+}
+
+.perArticle {
+  border: 1px #9a9a9a solid;
+  padding: 15px;
+  margin-bottom: 30px;
+}
+.perArticle .welcome {
+  position: relative;
+}
+.perArticle .welcome .title {
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+.perArticle .time {
+  color: #787878;
+  font-size: 14px;
+  background: #eeeeee;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 3px;
+}
+.perArticle .date {
+  color: #787878;
+  font-size: 14px;
+}
+.perArticle .simpleContent {
+  -webkit-line-clamp: 7;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.perAdmin {
+  position: relative;
+  margin: 20px 0;
+  border-bottom: 1px 16px solid;
+}
+
+.functionBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.functionBtn .edit {
+  color: #787878;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-left: 7px;
+}
+
+.btn {
+  padding: 5px;
+  border: 1px #9a9a9a solid;
+  border-radius: 3px;
+  text-decoration: none;
+}
+
+.newArticle {
+  border: 1px #9a9a9a solid;
+  padding: 15px;
+  margin-bottom: 30px;
+}
+.newArticle .title {
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+.newArticle form {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 30px;
+}
+.newArticle form .newArticleInfo {
+  display: flex;
+  flex-direction: column;
+}
+.newArticle form .newArticleInfo input {
+  margin-bottom: 15px;
+}
+.newArticle form textarea {
+  margin-bottom: 15px;
+}
+.newArticle form div .addBtn {
+  position: absolute;
+  right: 0px;
+}
+
+.blogFooter {
+  color: #fefefe;
+  font-size: 14px;
+  background: #333;
+  padding: 10px 5px;
+  text-align: center;
+}
+
+/* blog_login */
+.login {
+  max-width: 360px;
+  padding: 40px 60px 80px 60px;
+  margin: 60px auto;
+  border: 1px #333 solid;
+}
+.login h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.login form {
+  display: flex;
+  flex-direction: column;
+}
+.login form .loginInfo {
+  display: flex;
+  flex-direction: column;
+}
+.login form .loginInfo span {
+  color: #333;
+  font-size: 14px;
+  margin-left: 10px;
+}
+.login form .loginInfo input {
+  margin-bottom: 15px;
+}
+.login form .loginBtn {
+  color: #fefefe;
+  font-size: 14px;
+  background: linear-gradient(#333, #434343);
+  padding: 16px 0;
+  margin-top: 40px;
+  border-radius: 3px;
+  text-align: center;
+}
+
+/*# sourceMappingURL=stylesheet.css.map */

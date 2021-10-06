@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Twitch Top Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      margin: 0px;
+      max-width: 1280px;
+    }
+
+    /* 為了讓切換遊戲頻道的時候，不會讓畫面的排版被滾輪條的消失出現影響到，所以隱藏滾輪條 */
+    body::-webkit-scrollbar {
+      display: none;
+    }
+    .navbar { 
+      max-width: 1280px;
+      padding: 0px 20px;
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* 這是為了看到底是哪裡多出了 margin，而找到的答案，就註記一下
+    <ul> user agent stylesheet {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+    }
+    */
+
+    .navbar__site-name {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .navbar__games-list {
+      list-style: none;
+      display: flex;
+      font-size: 14px;
+    }
+
+    li {
+      margin-left: 20px;
+      padding: 5px;
+    }
+
+    li:hover {
+      cursor: pointer;
+      background: #2366e1;
+      color: white;
+      border-radius: 3px;
+    }
+
+    .section {
+      background: radial-gradient(ellipse at center, #8b8ba1, #0d1024);
+      color: white;
+    }
+
+    .desc {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 0px 0px 0px;
+    }
+
+    .streams {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      filter: brightness(95%);
+      margin: 0px 10px;
+    }
+
+    .stream, .stream-empty {
+      width: 320px;
+      text-align: left;
+      transition: all 0.15s;
+      margin: 12px;
+    }
+    
+
+    .stream:hover {
+      transform: scale(1.15);
+      filter: brightness(1.4);
+      cursor: pointer;
+    }
+
+    .stream__image {
+      height: auto;
+      margin: auto;
+      background: white;
+    }
+
+    .stream__image > img,  .main-photo > img {
+      width: 100%;
+      margin: auto;
+    }
+
+    .stream__main {
+      display: flex;
+      align-items: center;
+      padding: 7px;
+    }
+
+    .main-photo {
+      max-width: 64px;
+      max-height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 12px;
+    }
+
+    .main-info > div {
+      width: 225px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+  </style>
+
+  <script>
+    const clientID = 'fw7dutzkc2t494bgybwhnszm7yv3id'
+    const apiURL = 'https://api.twitch.tv/kraken'
+    const streamTemplate = `
+        <div class="stream">
+          <div class="stream__image"><img src="$screenshot"></img></div>
+          <div class="stream__main">
+            <div class="main-photo"><img src="$logo"></img></div>
+            <div class="main-info">
+              <div class="title">$channel-status</div>
+              <div class="where">$channel-name</div>
+            </div>
+          </div>
+        </div>
+    `
+    const streamEmptyTemplate = '<div class="stream-empty"></div>'
+
+    $(document).ready(() => {
+      runNavbar()
+      runStreams('')
+      // 事件監聽，可以切換熱門遊戲直播頻道
+      $('.navbar__games-list').on('click', (e) => {
+        $('.desc').children('h1:first-child').text(e.target.innerText)
+        $('.streams').html('')
+        runStreams(e.target.innerText)
+      })
+    })
+
+    // 拿到熱門遊戲的前 5 名
+    async function getTopGames() {
+      const response = await fetch(`${apiURL}/games/top?limit=5`, {
+        headers: new Headers({
+          'Accept': 'application/vnd.twitchtv.v5+json',
+          'Client-ID': clientID
+        })
+      })
+      try { const data = await  response.json()
+        return data
+      } catch(e) {
+        alert('An error is happening. Please try again later.')
+      }
+    }
+
+    // 拿到前 20 個直播頻道，
+    async function getStreams(gameName) {
+      const response = await fetch(`${apiURL}/streams/?game=${encodeURIComponent(gameName)}&limit=20`, {
+        headers: new Headers({
+          'Accept': 'application/vnd.twitchtv.v5+json',
+          'Client-ID': clientID
+        })
+      })
+      try { const data = await response.json()
+        return data
+      } catch(e) {
+        alert('An error is happening. Please try again later.')
+      }
+    }
+    
+    // 將熱門遊戲資訊放到 Navbar
+    async function runNavbar() {
+      const data = await getTopGames()
+      try { 
+        for (let perTop of data.top) {
+          let li = `<li>${perTop.game.name}</li>`
+          $('.navbar__games-list').append(li)
+        }
+      } catch(err) {
+        console.log(err)
+      }
+    }
+
+    // 將頻道資訊放到 Streams 
+    async function runStreams(gameName) {
+      const data = await getStreams(gameName)
+      try { appendStreams(data)
+      } catch(err) {
+        console.log(err)
+      }
+    }
+    
+    // 將拿到的頻道資料堪入網頁畫面
+    function appendStreams(data) {
+      for (let stream of data.streams) {
+        let div = streamTemplate
+          .replace('$screenshot', stream.preview.large)
+          .replace('$logo', stream.channel.logo)
+          .replace('$channel-status', stream.channel.status)
+          .replace('$channel-name', stream.channel.name)
+        $('.streams').append(div)
+      }
+      appendEmptyStreams()
+      appendEmptyStreams()
+    }
+    
+    function appendEmptyStreams() {
+      $('.streams').append(streamEmptyTemplate)
+    }
+
+  </script>
+</head>
+<body class="bug">
+  <nav class="navbar">
+    <div class="navbar__site-name">
+      Twitch Top Games
+    </div>
+    <ul class="navbar__games-list">
+    </ul>
+  </nav>
+  <section class="section">
+    <div class="desc">
+      <h1>Top Games</h1>
+      <h1>Top 20 popular live streams sorted by current viewers</h1>
+    </div>
+    <section class="streams">
+    </section>
+  </section>
+</body>
+</html>
